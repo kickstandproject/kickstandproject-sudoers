@@ -1,0 +1,31 @@
+# == Class: sudoers::client::config
+#
+# === Authors
+#
+# Paul Belanger <paul.belanger@polybeacon.com>
+#
+# === Copyright
+#
+# Copyright (C) 2012, PolyBeacon, Inc.
+#
+# This program is free software, distributed under the terms
+# of the Apache License, Version 2.0. See the LICENSE file at
+# the top of the source tree.
+#
+class sudoers::client::config {
+  file { $sudoers::params::configdir:
+    ensure  => directory,
+    require => Class['sudoers::client::install'],
+  }
+
+  file { $sudoers::params::configfile:
+    ensure  => file,
+    content => template('sudoers/etc/sudoers.erb'),
+
+    require => Class['sudoers::client::install'],
+  }
+
+
+}
+
+# vim:sw=2:ts=2:expandtab:textwidth=79
